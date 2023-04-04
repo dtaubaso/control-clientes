@@ -19,4 +19,15 @@ export class ClientesComponent {
     )
   }
 
+  getSaldoTotal(){
+    let saldoTotal : number = 0;
+    if(this.clientes){
+      this.clientes.forEach(cliente => {
+        // el ! para que no de error de undefined
+        saldoTotal += cliente.saldo!;
+      });
+    }
+    return saldoTotal;
+  }
+
 }
