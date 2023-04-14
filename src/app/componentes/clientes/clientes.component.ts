@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { FlashMessagesService } from 'flash-messages-angular';
 import { Cliente } from 'src/app/modelo/cliente.model';
@@ -16,8 +16,9 @@ export class ClientesComponent {
     apellido: '',
     email: '',
     saldo: 0
-
   }
+  @ViewChild("clienteForm") clienteForm: NgForm;
+  @ViewChild("botonCerrar") botonCerrar: ElementRef;
 
   constructor(private clientesServicio: ClienteServicio,
     private flasMessages: FlashMessagesService
@@ -47,7 +48,14 @@ export class ClientesComponent {
         cssClass: 'alert-danger', timeout: 4000
       });
     }
-    else{}
+    else{
+      // Agregar el nuevo cliente
+      this.clientesServicio.agregarCliente(value);
+      this.clienteForm.resetForm();
+      this.cerrarModal();
+    }
   }
-
+private cerrarModal(){
+  this.botonCerrar.nativeElement.click();
+}
 }
