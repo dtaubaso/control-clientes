@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FlashMessagesService } from 'flash-messages-angular';
 import { LoginService } from 'src/app/servicios/login.service';
@@ -8,7 +8,7 @@ import { LoginService } from 'src/app/servicios/login.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent{
 
   email: string;
   password: string;
@@ -18,6 +18,14 @@ export class LoginComponent {
     private flashMessages: FlashMessagesService,
     private loginservice: LoginService
   ){}
+
+  ngOnInit(){
+    this.loginservice.getAuth().subscribe( auth =>{
+      if(auth){
+        this.router.navigate(['/']);
+      }
+    })
+  }
 
     login(){
       this.loginservice.login(this.email, this.password)
